@@ -10,5 +10,5 @@ public interface PaperService {
 
     void write(PaperDTO paperDTO);
 
-    void delete(Long id);
+    boolean delete(Long id, String password);
 }

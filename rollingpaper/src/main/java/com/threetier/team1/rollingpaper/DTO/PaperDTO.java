@@ -14,13 +14,18 @@ public class PaperDTO {
     private Long id;
     private String nickname;
     private String password;
-    private String comment;
+    private String content;
 
     public static PaperDTO fromEntity(Paper paper) {
         return PaperDTO.builder()
                 .id(paper.getId())
                 .nickname(paper.getNickname())
-                .comment(paper.getComment())
+                .content(paper.getContent())
                 .build();
+    }
+
+    public static class deletePaper {
+        private Long id;
+        private String password;
     }
 }

@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,9 +25,16 @@ public class PaperController {
 
     @PostMapping("")
     public ResponseEntity<Object> write(@RequestBody PaperDTO paperDTO) {
-
+        paperService.write(paperDTO);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("delete")
-    public ResponseEntity<Object> delete(@RequestBody)
+    @PostMapping("delete")
+    public ResponseEntity<Object> delete(@RequestBody PaperDTO paperDTO) {
+        boolean result = paperService.delete(paperDTO.getId(), paperDTO.getPassword());
+        if(result == true) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 }

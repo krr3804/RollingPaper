@@ -18,12 +18,12 @@ public class Paper {
     private Long id;
     private String nickname;
     private String password;
-    private String comment;
+    private String content;
 
     public Paper(PaperDTO paperDTO) {
         this.nickname = paperDTO.getNickname();
         this.password = paperDTO.getPassword();
-        this.comment = paperDTO.getComment();
+        this.content = paperDTO.getContent();
     }
 
 
