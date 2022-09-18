@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/paperdb?serverTimezone=Asia/Seoul
+    username: root
+    password: Yk2469804!
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+      database: mysql
+      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  level:
+    org:
+      hibernate:
+        type: trace
