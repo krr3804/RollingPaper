@@ -19,21 +19,20 @@ import java.util.List;
 public class PaperController {
 
     private final PaperService paperService;
-    private ObjectMapper mapper = new ObjectMapper();
 
-    @GetMapping("")
-    public ResponseEntity<List<PaperDTO>> getList() {
-        List<PaperDTO> list = paperService.getList();
-        return ResponseEntity.status(HttpStatus.OK).body(list);
+    @GetMapping("/")
+    public ResponseEntity<List<PaperDTO>> getAllPapers() {
+        List<PaperDTO> papers = paperService.getList();
+        return ResponseEntity.status(HttpStatus.OK).body(papers);
     }
 
-    @PostMapping("")
+    @PostMapping("/")
     public ResponseEntity<Object> write(@RequestBody PaperDTO paperDTO) {
         paperService.write(paperDTO);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public ResponseEntity<Object> delete(@RequestBody PaperDTO paperDTO) {
         boolean result = paperService.delete(paperDTO.getId(), paperDTO.getPassword());
         if(result == true) {
