@@ -1,6 +1,7 @@
 package com.threetier.team1.rollingpaper.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.threetier.team1.rollingpaper.DTO.ApiResponseDTO;
 import com.threetier.team1.rollingpaper.DTO.PaperDTO;
 import com.threetier.team1.rollingpaper.domain.Paper;
 import com.threetier.team1.rollingpaper.repository.PaperRepository;
@@ -29,15 +30,15 @@ public class PaperController {
     @PostMapping("/")
     public ResponseEntity<Object> write(@RequestBody PaperDTO paperDTO) {
         paperService.write(paperDTO);
-        return ResponseEntity.status(HttpStatus.OK).body("success");
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDTO("success"));
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/")
     public ResponseEntity<Object> delete(@RequestBody PaperDTO paperDTO) {
         boolean result = paperService.delete(paperDTO.getId(), paperDTO.getPassword());
-        if(result == true) {
-            return ResponseEntity.status(HttpStatus.OK).body("success");
+        if(result) {
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseDTO("success"));
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("unauthorized");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponseDTO("unauthorized"));
     }
 }
