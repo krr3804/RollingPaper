@@ -27,15 +27,15 @@ public class PaperController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Object> write(@RequestBody PaperDTO paperDTO) {
+    public ResponseEntity<Object> createPaper(@RequestBody PaperDTO paperDTO) {
         paperService.write(paperDTO);
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<Object> delete(@RequestBody PaperDTO paperDTO) {
+    @DeleteMapping("/")
+    public ResponseEntity<Object> deletePaper(@RequestBody PaperDTO paperDTO) {
         boolean result = paperService.delete(paperDTO.getId(), paperDTO.getPassword());
-        if(result == true) {
+        if(result) {
             return ResponseEntity.status(HttpStatus.OK).body("success");
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("unauthorized");
