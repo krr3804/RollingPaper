@@ -1,9 +1,8 @@
 package com.threetier.team1.rollingpaper.domain;
 
 import com.threetier.team1.rollingpaper.DTO.PaperDTO;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.threetier.team1.rollingpaper.DTO.PaperDTO.CreatePaperInfo;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +10,8 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Paper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +20,13 @@ public class Paper {
     private String password;
     private String content;
 
-    public Paper(PaperDTO paperDTO) {
-        this.nickname = paperDTO.getNickname();
-        this.password = paperDTO.getPassword();
-        this.content = paperDTO.getContent();
-    }
 
+    public static Paper fromDTO(CreatePaperInfo createPaperInfo) {
+        return Paper.builder()
+                .password(createPaperInfo.getPassword())
+                .nickname(createPaperInfo.getNickname())
+                .content(createPaperInfo.getContent())
+                .build();
+    }
 
 }

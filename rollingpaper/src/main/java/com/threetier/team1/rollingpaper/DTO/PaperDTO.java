@@ -6,25 +6,34 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class PaperDTO {
-    private Long id;
-    private String nickname;
-    private String password;
-    private String content;
 
-    public static PaperDTO fromEntity(Paper paper) {
-        return PaperDTO.builder()
-                .id(paper.getId())
-                .nickname(paper.getNickname())
-                .content(paper.getContent())
-                .build();
+public class PaperDTO {
+    @Getter
+    public static class CreatePaperInfo {
+        private String nickname;
+        private String password;
+        private String content;
     }
 
-    public static class deletePaper {
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ShowListInfo {
+        private Long id;
+        private String nickname;
+        private String content;
+
+        public static ShowListInfo fromEntity(Paper paper) {
+            return ShowListInfo.builder()
+                    .id(paper.getId())
+                    .nickname(paper.getNickname())
+                    .content(paper.getContent())
+                    .build();
+        }
+    }
+    @Getter
+    public static class DeletePaperInfo {
         private Long id;
         private String password;
     }

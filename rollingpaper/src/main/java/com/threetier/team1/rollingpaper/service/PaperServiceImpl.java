@@ -1,6 +1,9 @@
 package com.threetier.team1.rollingpaper.service;
 
 import com.threetier.team1.rollingpaper.DTO.PaperDTO;
+import com.threetier.team1.rollingpaper.DTO.PaperDTO.CreatePaperInfo;
+import com.threetier.team1.rollingpaper.DTO.PaperDTO.DeletePaperInfo;
+import com.threetier.team1.rollingpaper.DTO.PaperDTO.ShowListInfo;
 import com.threetier.team1.rollingpaper.domain.Paper;
 import com.threetier.team1.rollingpaper.repository.PaperRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +25,23 @@ public class PaperServiceImpl implements PaperService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<PaperDTO> getList() {
+    public List<ShowListInfo> getList() {
         List<Paper> papers = paperRepository.findAll();
         System.out.println(papers.size());
-        return papers.stream().map(PaperDTO::fromEntity).collect(Collectors.toList());
+        return papers.stream().map(ShowListInfo::fromEntity).collect(Collectors.toList());
     }
 
     @Override
-    public void write(PaperDTO paperDTO) {
-        Paper paper = new Paper(paperDTO);
+    public void write(CreatePaperInfo createPaperInfo) {
+        Paper paper = Paper.fromDTO(createPaperInfo);
         paperRepository.save(paper);
     }
 
     @Override
-    public boolean delete(Long id, String password) {
-        Paper paper = paperRepository.findById(id).get();
-        if(paper.getPassword().equals(password)) {
-            paperRepository.deleteById(id);
+    public boolean delete(DeletePaperInfo deletePaperInfo) {
+        Paper paper = paperRepository.findById(deletePaperInfo.getId()).get();
+        if(paper.getPassword().equals(deletePaperInfo.getPassword())) {
+            paperRepository.deleteById(paper.getId());
             return true;
         }
         return false;
