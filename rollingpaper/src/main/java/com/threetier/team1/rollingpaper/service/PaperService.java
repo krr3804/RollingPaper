@@ -13,5 +13,5 @@ public interface PaperService {
 
     void write(CreatePaperInfo createPaperInfo);
 
-    boolean delete(DeletePaperInfo deletePaperInfo);
+    int delete(DeletePaperInfo deletePaperInfo);
 }

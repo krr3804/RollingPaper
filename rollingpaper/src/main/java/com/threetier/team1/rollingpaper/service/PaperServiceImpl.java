@@ -8,11 +8,13 @@ import com.threetier.team1.rollingpaper.domain.Paper;
 import com.threetier.team1.rollingpaper.repository.PaperRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,23 +29,27 @@ public class PaperServiceImpl implements PaperService{
     @Transactional(readOnly = true)
     public List<ShowListInfo> getList() {
         List<Paper> papers = paperRepository.findAll();
-        System.out.println(papers.size());
         return papers.stream().map(ShowListInfo::fromEntity).collect(Collectors.toList());
     }
 
     @Override
     public void write(CreatePaperInfo createPaperInfo) {
-        Paper paper = Paper.fromDTO(createPaperInfo);
-        paperRepository.save(paper);
+            Paper paper = Paper.fromDTO(createPaperInfo);
+            paperRepository.save(paper);
     }
 
     @Override
-    public boolean delete(DeletePaperInfo deletePaperInfo) {
-        Paper paper = paperRepository.findById(deletePaperInfo.getId()).get();
+    public int delete(DeletePaperInfo deletePaperInfo) {
+        Optional<Paper> optional = paperRepository.findById(deletePaperInfo.getId());
+
+        if(optional.isEmpty()) {
+            return 406;
+        }
+        Paper paper = optional.get();
         if(paper.getPassword().equals(deletePaperInfo.getPassword())) {
             paperRepository.deleteById(paper.getId());
-            return true;
+            return 200;
         }
-        return false;
+        return 403;
     }
 }
