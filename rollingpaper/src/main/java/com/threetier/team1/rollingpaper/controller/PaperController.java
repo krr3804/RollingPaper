@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins="*", allowedHeaders = "*")
 public class PaperController {
 
     private final PaperService paperService;
