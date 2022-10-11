@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins="*", allowedHeaders = "*")
+@CrossOrigin(origins="*", allowedHeaders = "*", methods = {GET,POST,DELETE,PUT})
 public class PaperController {
 
     private final PaperService paperService;
