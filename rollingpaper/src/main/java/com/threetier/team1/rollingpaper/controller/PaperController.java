@@ -19,7 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins="*", allowedHeaders = "*", methods = {"get","post","delete","put"})
+@CrossOrigin(origins="*", allowedHeaders = "*", methods = {GET,POST,PUT,DELETE})
 public class PaperController {
 
     private final PaperService paperService;
